@@ -9,3 +9,10 @@ El archivo 2 Toma el archivo JSON depura utilizando ventanas de votación y expo
 
 El archivo 3 Toma los resultados del archivo JSON y lo rederiza con el video original utilizando cv2
 
+# Instalacion
+
+-Ultralytics
+
+-Opencv
+
+-Pillow
