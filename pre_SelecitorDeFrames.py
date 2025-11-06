@@ -39,3 +39,4 @@ for idx, frame_number in enumerate(indices):
 
 video.release()
 print(f"Listo ✅. Se guardaron {num_muestras} frames en la carpeta '{output_folder}', comenzando en {start_index}.")
+
