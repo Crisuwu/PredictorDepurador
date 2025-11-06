@@ -1,0 +1,13 @@
+path: Tarea1/dataset
+train: images/train
+val: images/val
+
+nc: 6   # número de clases
+
+names:
+  0: "Casco"
+  1: "Sin casco"
+  2: "Mascarilla"
+  3: "Sin mascarilla"
+  4: "Chaleco reflectante"
+  5: "Sin chaleco reflectante"
