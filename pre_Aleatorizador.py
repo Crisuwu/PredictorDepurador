@@ -12,13 +12,14 @@ os.makedirs(output_folder, exist_ok=True)
 # Obtener lista de imágenes
 imagenes = [f for f in os.listdir(input_folder) if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
 
-# Barajar aleatoriamente
+# Aletorizar
 random.shuffle(imagenes)
 
-# Copiar con nombres 1, 2, 3...
+# Nombrar con contador
 for i, nombre in enumerate(imagenes, start=1):
     ruta_origen = os.path.join(input_folder, nombre)
     ruta_destino = os.path.join(output_folder, f"{i}.jpg")
     shutil.copy(ruta_origen, ruta_destino)
 
-print(f"Listo ✅. Se copiaron {len(imagenes)} imágenes en orden aleatorio a '{output_folder}'.")
+print(f"Se copiaron {len(imagenes)} imágenes en orden aleatorio a '{output_folder}'.")
+
