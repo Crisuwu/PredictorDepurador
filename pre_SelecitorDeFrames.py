@@ -3,10 +3,10 @@ import os
 import numpy as np
 
 # Configuración
-video_path = "4fps5.mp4"
+video_path = "video_fps5.mp4"
 output_folder = "frames_seleccionados"
 num_muestras = 50
-start_index = 100   # <-- donde quieres empezar a contar
+start_index = 0   #Inicio de contador
 
 # Abrir video
 video = cv2.VideoCapture(video_path)
@@ -38,5 +38,6 @@ for idx, frame_number in enumerate(indices):
     cv2.imwrite(filename, frame)
 
 video.release()
-print(f"Listo ✅. Se guardaron {num_muestras} frames en la carpeta '{output_folder}', comenzando en {start_index}.")
+print(f"Se guardaron {num_muestras} frames en la carpeta '{output_folder}', comenzando en {start_index}.")
+
 
