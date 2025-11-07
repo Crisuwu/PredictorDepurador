@@ -3,44 +3,35 @@ import json
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
-# --- Configuración ---
-# ¡Asegúrate que este nombre coincida con tu archivo JSON!
+#config
 json_path = 'result.json' 
-video_path = 'video.avi' # ¡Verifica que este sea el nombre de tu video!
+video_path = 'video.avi' # Nombre del video
 output_path = 'Video_depurado.mp4' 
-font_path = 'arial.ttf' # IMPORTANTE: Debe estar en la misma carpeta
+font_path = 'arial.ttf' # Aqui Es para cambiar la fuente
 font_size = 20
 line_width = 3
 
-# --- Mapa de Colores (en RGB para Pillow) ---
+#Colores para cada etiqueta
 COLOR_MAP = {
-    0: (0, 255, 0),    # Casco -> Verde Brillante
-    1: (255, 0, 0),    # Sin casco -> Rojo Brillante
-    2: (0, 0, 255),    # Mascarilla -> Azul Brillante
-    3: (255, 255, 0),  # Sin mascarilla -> Amarillo
-    4: (0, 255, 255),  # Chaleco reflectante -> Cyan
-    5: (255, 0, 255)   # Sin chaleco reflectante -> Magenta
+    0: (0, 255, 0),    # Casco                       -> Verde Brillante
+    1: (255, 0, 0),    # Sin casco                  -> Rojo Brillante
+    2: (0, 0, 255),    # Mascarilla                  -> Azul Brillante
+    3: (255, 255, 0),  # Sin mascarilla              -> Amarillo
+    4: (0, 255, 255),  # Chaleco reflectante         -> Cyan
+    5: (255, 0, 255)   # Sin chaleco reflectante     -> Magenta
 }
 FALLBACK_COLOR = (255, 255, 255) # Blanco
 
-# #################################################################
-# ###               INICIO DE LA SECCIÓN CORREGIDA              ###
-# #################################################################
-
+#Cargar json y avisar si saltan errores
 print(f"Cargando datos JSON desde {json_path}...")
 data_por_fotograma = [] # La lista que usará el resto del script
 try:
     with open(json_path, 'r', encoding='utf-8') as f:
-        # 1. Cargar el objeto JSON completo de una sola vez
+        #Cargar el objeto JSON completo de una sola vez
         all_data_dict = json.load(f)
     
-    # 2. Convertir el diccionario ({"frame_0":...}) a una lista ([...])
-    #    ordenada numéricamente por el número de frame.
-    
-    # Ordenamos las claves (ej. "frame_1", "frame_10") por su número
     sorted_keys = sorted(all_data_dict.keys(), key=lambda k: int(k.split('_')[1]))
     
-    # 3. Construimos la lista 'data_por_fotograma' en el orden correcto
     for key in sorted_keys:
         data_por_fotograma.append(all_data_dict[key])
         
@@ -56,12 +47,9 @@ except Exception as e:
     print(f"Ocurrió un error inesperado al cargar el JSON: {e}")
     exit()
 
-# #################################################################
-# ###                 FIN DE LA SECCIÓN CORREGIDA               ###
-# #################################################################
 
 
-# --- Cargar la fuente personalizada ---
+# Prueba Tema de la fuente
 try:
     font = ImageFont.truetype(font_path, font_size)
     font_frame_counter = ImageFont.truetype(font_path, font_size + 10) # Fuente más grande para el contador
@@ -70,8 +58,6 @@ except IOError:
     print("Usando fuente por defecto de Pillow.")
     font = ImageFont.load_default()
     font_frame_counter = font
-# --- Fin de carga de fuente ---
-
 
 print(f"Abriendo video de entrada: {video_path}...")
 cap = cv2.VideoCapture(video_path)
@@ -84,10 +70,9 @@ width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 fps = cap.get(cv2.CAP_PROP_FPS)
 
-# --- Codec MP4 para mejor calidad ---
+# Prueba de mejorar calidad
 fourcc = cv2.VideoWriter_fourcc(*'mp4v') # Usar 'mp4v' para .mp4
 out = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
-# --- FIN DE NUEVO CODEC ---
 
 print("Procesando video y dibujando con Pillow...")
 frame_idx = 0 
@@ -155,3 +140,4 @@ out.release()
 cv2.destroyAllWindows()
 
 print(f"¡Proceso completado! Video guardado en: {output_path}")
+
