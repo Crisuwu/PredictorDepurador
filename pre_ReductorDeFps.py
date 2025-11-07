@@ -9,7 +9,7 @@ if not video.isOpened():
     exit()
 
 # Obtener propiedades del video original
-fps_original = int(video.get(cv2.CAP_PROP_FPS))   # FPS original (ej: 60)
+fps_original = int(video.get(cv2.CAP_PROP_FPS))   # FPS original
 frame_count = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
 width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
 height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -32,7 +32,7 @@ while True:
     if not ret:
         break
 
-    # Guardar solo cada "step"-ésimo frame
+    # Guardar solo cada "step" frame
     if i % step == 0:
         salida.write(frame)
     i += 1
@@ -40,3 +40,4 @@ while True:
 video.release()
 salida.release()
 cv2.destroyAllWindows()
+
